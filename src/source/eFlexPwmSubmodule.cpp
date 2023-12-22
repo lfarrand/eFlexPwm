@@ -67,7 +67,10 @@ namespace eFlex {
       m_config = config;
       m_fpmin = Timer::prescalerToMinPwmFrequency (config.prescale());
       m_wasbegin = false; // force update
-      return (PWM_Init (ptr(), SM[m_smidx], config.kPwmConfig()) == kStatus_Success) ;
+
+      bool isSuccess = (PWM_Init (ptr(), SM[m_smidx], config.kPwmConfig()) == kStatus_Success);
+
+      return isSuccess;
     }
     return false;
   }
@@ -162,15 +165,140 @@ namespace eFlex {
 
   //-----------------------------------------------------------------------------
   bool SubModule::adjustPrescaler (uint32_t freq) {
+Serial.println("#### SubModule::adjustPrescaler ####");
+
     pwm_clock_prescale_t prescaler = ( (freq < minPwmFrequency()) ? config().prescale() : kPWM_Prescale_Divide_1);
+
+char strBuf[150];
+
+if(prescaler == kPWM_Prescale_Divide_1) {
+  Serial.println("#### prescaler = kPWM_Prescale_Divide_1 ####");
+}
+else if(prescaler == kPWM_Prescale_Divide_2) {
+  Serial.println("#### prescaler = kPWM_Prescale_Divide_2 ####");
+}
+else if(prescaler == kPWM_Prescale_Divide_4) {
+  Serial.println("#### prescaler = kPWM_Prescale_Divide_4 ####");
+}
+else if(prescaler == kPWM_Prescale_Divide_8) {
+  Serial.println("#### prescaler = kPWM_Prescale_Divide_8 ####");
+}
+else if(prescaler == kPWM_Prescale_Divide_16) {
+  Serial.println("#### prescaler = kPWM_Prescale_Divide_16 ####");
+}
+else if(prescaler == kPWM_Prescale_Divide_32) {
+  Serial.println("#### prescaler = kPWM_Prescale_Divide_32 ####");
+}
+else if(prescaler == kPWM_Prescale_Divide_64) {
+  Serial.println("#### prescaler = kPWM_Prescale_Divide_64 ####");
+}
+else if(prescaler == kPWM_Prescale_Divide_128) {
+  Serial.println("#### prescaler = kPWM_Prescale_Divide_128 ####");
+}
+
+sprintf(strBuf, "#### F_BUS_ACTUAL: %lu ####", F_BUS_ACTUAL);
+Serial.println(strBuf);
+memset(strBuf, 0, sizeof(strBuf));
+
+sprintf(strBuf, "#### freq: %lu ####", freq);
+Serial.println(strBuf);
+memset(strBuf, 0, sizeof(strBuf));
+
+uint32_t calcMinFreq = (F_BUS_ACTUAL / (static_cast<uint32_t> (prescaler & 0x7F) * 65535UL) + 1);
+sprintf(strBuf, "#### calcMinFreq: %lu ####", calcMinFreq);
+Serial.println(strBuf);
+memset(strBuf, 0, sizeof(strBuf));
+
+uint32_t minFreqForPrescaler = Timer::prescalerToMinPwmFrequency (prescaler);
+
+sprintf(strBuf, "#### minFreqForPrescaler: %lu ####", minFreqForPrescaler);
+Serial.println(strBuf);
+memset(strBuf, 0, sizeof(strBuf));
 
     while ( (freq < Timer::prescalerToMinPwmFrequency (prescaler)) && (prescaler < kPWM_Prescale_Divide_128)) {
 
       prescaler = static_cast<pwm_clock_prescale_t> (static_cast<unsigned> (prescaler) + 1);
+
+if(prescaler == kPWM_Prescale_Divide_1) {
+  Serial.println("#### prescaler = kPWM_Prescale_Divide_1 ####");
+}
+else if(prescaler == kPWM_Prescale_Divide_2) {
+  Serial.println("#### prescaler = kPWM_Prescale_Divide_2 ####");
+}
+else if(prescaler == kPWM_Prescale_Divide_4) {
+  Serial.println("#### prescaler = kPWM_Prescale_Divide_4 ####");
+}
+else if(prescaler == kPWM_Prescale_Divide_8) {
+  Serial.println("#### prescaler = kPWM_Prescale_Divide_8 ####");
+}
+else if(prescaler == kPWM_Prescale_Divide_16) {
+  Serial.println("#### prescaler = kPWM_Prescale_Divide_16 ####");
+}
+else if(prescaler == kPWM_Prescale_Divide_32) {
+  Serial.println("#### prescaler = kPWM_Prescale_Divide_32 ####");
+}
+else if(prescaler == kPWM_Prescale_Divide_64) {
+  Serial.println("#### prescaler = kPWM_Prescale_Divide_64 ####");
+}
+else if(prescaler == kPWM_Prescale_Divide_128) {
+  Serial.println("#### prescaler = kPWM_Prescale_Divide_128 ####");
+}
     }
 
-    if (config().prescale() != prescaler) {
+pwm_clock_prescale_t configPrescale = config().prescale();
 
+if(configPrescale == kPWM_Prescale_Divide_1) {
+  Serial.println("#### configPrescale = kPWM_Prescale_Divide_1 ####");
+}
+else if(configPrescale == kPWM_Prescale_Divide_2) {
+  Serial.println("#### configPrescale = kPWM_Prescale_Divide_2 ####");
+}
+else if(configPrescale == kPWM_Prescale_Divide_4) {
+  Serial.println("#### configPrescale = kPWM_Prescale_Divide_4 ####");
+}
+else if(configPrescale == kPWM_Prescale_Divide_8) {
+  Serial.println("#### configPrescale = kPWM_Prescale_Divide_8 ####");
+}
+else if(configPrescale == kPWM_Prescale_Divide_16) {
+  Serial.println("#### configPrescale = kPWM_Prescale_Divide_16 ####");
+}
+else if(configPrescale == kPWM_Prescale_Divide_32) {
+  Serial.println("#### configPrescale = kPWM_Prescale_Divide_32 ####");
+}
+else if(configPrescale == kPWM_Prescale_Divide_64) {
+  Serial.println("#### configPrescale = kPWM_Prescale_Divide_64 ####");
+}
+else if(configPrescale == kPWM_Prescale_Divide_128) {
+  Serial.println("#### configPrescale = kPWM_Prescale_Divide_128 ####");
+}
+
+if(prescaler == kPWM_Prescale_Divide_1) {
+  Serial.println("#### chosen prescaler = kPWM_Prescale_Divide_1 ####");
+}
+else if(prescaler == kPWM_Prescale_Divide_2) {
+  Serial.println("#### chosen prescaler = kPWM_Prescale_Divide_2 ####");
+}
+else if(prescaler == kPWM_Prescale_Divide_4) {
+  Serial.println("#### chosen prescaler = kPWM_Prescale_Divide_4 ####");
+}
+else if(prescaler == kPWM_Prescale_Divide_8) {
+  Serial.println("#### chosen prescaler = kPWM_Prescale_Divide_8 ####");
+}
+else if(prescaler == kPWM_Prescale_Divide_16) {
+  Serial.println("#### chosen prescaler = kPWM_Prescale_Divide_16 ####");
+}
+else if(prescaler == kPWM_Prescale_Divide_32) {
+  Serial.println("#### chosen prescaler = kPWM_Prescale_Divide_32 ####");
+}
+else if(prescaler == kPWM_Prescale_Divide_64) {
+  Serial.println("#### chosen prescaler = kPWM_Prescale_Divide_64 ####");
+}
+else if(prescaler == kPWM_Prescale_Divide_128) {
+  Serial.println("#### chosen prescaler = kPWM_Prescale_Divide_128 ####");
+}
+
+    if (config().prescale() != prescaler) {
+Serial.println("#### Calling setPrescaler() ####");
       setPrescaler (prescaler);
       return true;
     }

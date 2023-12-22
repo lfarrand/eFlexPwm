@@ -923,6 +923,20 @@ namespace eFlex {
         PWM_SetChannelOutput (ptr(), SM[m_smidx], kPwmChan (channel),  outputstate);
       }
 
+      /*!
+       * @brief Enables or disables the PWM output trigger.
+       *
+       * This function allows the user to enable or disable the PWM trigger. The PWM has 2 triggers. Trigger 0
+       * is activated when the counter matches VAL 0, VAL 2, or VAL 4 register. Trigger 1 is activated
+       * when the counter matches VAL 1, VAL 3, or VAL 5 register.
+       *
+       * @param valueRegister Value register that will activate the trigger
+       * @param activate      true: Enable the trigger; false: Disable the trigger
+       */
+      inline void outputTriggerEnable (pwm_value_register_t valueRegister, bool activate) {
+        PWM_OutputTriggerEnable (ptr(), SM[m_smidx], valueRegister, activate);
+      }
+
       /**
         @brief Current minimal PWM frequency in Hz
 
