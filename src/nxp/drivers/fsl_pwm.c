@@ -1250,7 +1250,6 @@ my_log("##################### PWM_SetClockMode ##########################");
  */
 void PWM_SetPwmForceOutputToZero(PWM_Type *base, pwm_submodule_t subModule, pwm_channels_t pwmChannel, bool forcetozero)
 {
-my_log("##################### PWM_SetPwmForceOutputToZero ##########################");
     uint16_t reg = base->SM[subModule].CTRL2;
     uint16_t mask;
 
