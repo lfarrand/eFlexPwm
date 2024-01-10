@@ -73,7 +73,7 @@ namespace eFlex {
   }
 
   //-----------------------------------------------------------------------------
-  bool SubModule::begin (bool doStart, bool doSync) {
+  bool SubModule::begin (bool doStart, bool doSync, bool doUpdateSetting = true) {
     bool success = isValid();
 
     if (success && !m_wasbegin) {
@@ -81,17 +81,18 @@ namespace eFlex {
       success &= m_pin[ChanA].begin();
 
       if (m_pin[ChanB].isValid()) {
-
         success &= m_pin[ChanB].begin();
       }
 
       if (success) {
-
         m_wasbegin = success; // if not true, no update !
-        success &= updateSetting (doSync);
-        m_wasbegin = success;
-        if (doStart && success) {
 
+        if (doUpdateSetting) {
+          success &= updateSetting (doSync);
+          m_wasbegin = success;
+        }
+
+        if (doStart && success) {
           start();
         }
       }

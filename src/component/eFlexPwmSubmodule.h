@@ -78,7 +78,7 @@ namespace eFlex {
 
         @return Returns false if there was error setting up the signal; true otherwise
       */
-      bool begin (bool doStart = true, bool doSync = true);
+      bool begin (bool doStart = true, bool doSync = true, bool doUpdateSetting = true);
 
       /**
         @brief Enable or disable the submodule
