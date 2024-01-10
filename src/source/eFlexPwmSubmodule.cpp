@@ -73,7 +73,7 @@ namespace eFlex {
   }
 
   //-----------------------------------------------------------------------------
-  bool SubModule::begin (bool doStart, bool doSync, bool doUpdateSetting = true) {
+  bool SubModule::begin (bool doStart, bool doSync, bool doUpdateSetting) {
     bool success = isValid();
 
     if (success && !m_wasbegin) {

@@ -75,6 +75,7 @@ namespace eFlex {
 
         @param doStart starts signal generation
         @param doSync synchronizes the operation by surrounding it with setPwmLdok (false) / setPwmLdok (true)
+        @param doUpdateSetting determines if PWM should be reinitialized when calling begin
 
         @return Returns false if there was error setting up the signal; true otherwise
       */
